@@ -30,7 +30,7 @@ func (c *Client) writeMessage() {
 		if !ok {
 			return
 		}
-
+		log.Println(message)
 		c.Conn.WriteJSON(message)
 	}
 
