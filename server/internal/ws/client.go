@@ -48,6 +48,7 @@ func (c *Client) readMessage(hub *Hub) {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
 				log.Println("error: ", err)
 			}
+			break
 		}
 
 		msg := &Message{
