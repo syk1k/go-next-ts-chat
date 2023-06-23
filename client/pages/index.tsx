@@ -38,8 +38,8 @@ const Index = () => {
         }
     }
 
-    const joinRoom = async (roomId : string) => {
-        const ws = new WebSocket(`${WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}?username=${user.username}`)
+    const joinRoom = async (roomId : string) => {        
+        const ws = new WebSocket(`${WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}&username=${user.username}`)
         if(ws.OPEN){
             setConn(ws)
             router.push("/app")
