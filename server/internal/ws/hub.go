@@ -1,7 +1,5 @@
 package ws
 
-import "log"
-
 type Room struct {
 	ID      string             `json:"id"`
 	Name    string             `json:"name"`
@@ -28,11 +26,10 @@ func (h *Hub) Run() {
 	for {
 		select {
 		case cl := <-h.Register:
-			log.Println("Registered a user")
-			if _, ok := h.Rooms[cl.ID]; ok {
+			if _, ok := h.Rooms[cl.RoomID]; ok {
 				r := h.Rooms[cl.RoomID]
 
-				if _, ok := r.Clients[cl.ID]; ok {
+				if _, ok := r.Clients[cl.ID]; !ok {
 					r.Clients[cl.ID] = cl
 				}
 			}
@@ -52,7 +49,6 @@ func (h *Hub) Run() {
 				}
 			}
 		case m := <-h.Broadcast:
-			log.Println(m.Content)
 			if _, ok := h.Rooms[m.RoomID]; ok {
 				for _, cl := range h.Rooms[m.RoomID].Clients {
 					cl.Message <- m
